@@ -22,15 +22,6 @@ mongoose.connect(process.env.MONGO_URI).then(()=>{
 }).catch((error)=>console.log("연결 실패",error))
 
 
-mongoose.connect(process.env.MONGO_URI).then(()=>{
-    console.log("연결성공")
-}).catch((error)=> console.log("실패",error))
-
-
-
-const userRoutes =require("./routes/user")
-app.use("/api/auth",userRoutes)
-
 app.listen(PORT,()=>{
     console.log('Server is running')
 })
