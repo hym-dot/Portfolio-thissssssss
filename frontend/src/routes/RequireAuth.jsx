@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { api } from '../lib/api'
-export default function AuthRedirectRoute({ Component }) {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(null)
+export default function RequireAuth  ({Component}) {
+    const [ok,setOk]=useState(null)
 
     useEffect(() => {
 
@@ -13,19 +13,18 @@ export default function AuthRedirectRoute({ Component }) {
                 try {
                     await api.post('/api/auth/verify-token', {})
 
-                    if (alive) setIsAuthenticated(true)
+                    if (alive) setOk(true)
                 } catch (error) {
-                    if (alive) setIsAuthenticated(false)
+                    if (alive) setOk(false)
                 }
             })()
 
         return () => { alive = false }
     }, [])
 
-    if (isAuthenticated === null) return null;
+    if (ok === null) return null;
 
-    return isAuthenticated?
-    <Navigate to='/admin/post'  replace />:
-    <Component/>
+    return ok?
+    <Component/>:
+    <Navigate to='/admin/login'  replace />
 }
-

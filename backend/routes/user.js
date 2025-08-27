@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 
+
 const User = require("../models/User");
 
 const COOKIE_NAME = 'token'
@@ -19,13 +20,14 @@ const COOKIE_PATH = '/'
 router.post('/signup', async (req, res) => {
   try {
     const { username, password } = req.body;
-
+    
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({
         message: "이미 존재하는 사용자입니다."
       });
     }
+
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -46,44 +48,44 @@ router.post('/signup', async (req, res) => {
 // 로그인
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req.body
 
-    const user = await User.findOne({ username }).select("+password");
+    const user = await User.findOne({ username }).select("+password")
 
-    if (!user) return res.status(401).json({ message: "사용자 없음" });
-    if (!user.isActive) return res.status(401).json({ message: "비활성계정" });
+    if (!user) return res.status(401).json({ message: "사용자 없음" })
+    if (!user.isActive)return res.status(401).json({ message: "비활성계정" })//false일때 비활성
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-      user.failedLoginAttempts += 1;
-      user.lastLoginAttempt = new Date();
-
+      user.failedLoginAttempts += 1
+      user.lastLoginAttempt = new Date()
       if (user.failedLoginAttempts >= 5) {
-        user.isActive = false;
-        await user.save();
-        return res.status(401).json({ message: "비밀번호 5회이상 오류, 계정이 잠겼습니다." });
-      }
+        user.isActive = false //5번 이상 넘어가면 비활성 계정으로 변경
 
-      await user.save();
+        await user.save()
+        return res.status(401).json({ message: "비밀번호 5회이상 오류, 계정이 잠겼습니다." })
+      }
+      await user.save()
       return res.status(401).json({
         message: "비밀번호가 틀렸습니다.",
         failedAttemp: user.failedLoginAttempts + "번 틀림"
-      });
+      })
+
+
     }
 
-    user.failedLoginAttempts = 0;
-    user.lastLoginAttempt = new Date();
-    user.isLoggedIn = true;
+    user.failedLoginAttempts = 0
+    user.lastLoginAttempt = new Date()
+    user.isLoggedIn = true
 
     try {
-      const { data } = await axios.get("https://api.ipify.org/?format=json");
-      if (data?.ip) user.ipAdress = data.ip;
+      const { data } = await axios.get("https://api.ipify.org/?format=json")
+      if (data?.ip) user.ipAdress = data.ip
     } catch (error) {
-      console.error("IP주소 조회 실패");
+      console.error("IP주소 조회 실패")
     }
-
-    await user.save();
+    await user.save()
 
     const token = jwt.sign(
       {
@@ -93,30 +95,29 @@ router.post('/login', async (req, res) => {
       },
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
-    );
-
-    res.cookie(COOKIE_NAME, token, {
+    )
+    res.cookie("token", token, {
       httpOnly: true,
-      secure: SECURE, // NODE_EW → NODE_ENV 수정
-      sameSite: SAME_SITE,
-      maxAge: 24 * 60 * 60 * 1000,
-      path: COOKIE_PATH
-    });
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000
+    })
 
-    const userWithoutPassword = user.toObject();
-    delete userWithoutPassword.password;
+    const userWithoutPassword=user.toObject()
+    delete userWithoutPassword.password
 
     return res.status(200).json({
-      message: "로그인 성공",
-      token,
-      user: userWithoutPassword
-    });
+      message:"로그인 성공",token,
+      user:userWithoutPassword
+    })
+
 
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "서버 오류" }); // .json 앞에 status 빠져 있었음
+    console.error(error)
+    return res.status(500).json({message:"서버오류"})
   }
-});
+})
+
 
 //로그아웃
 router.post('/logout', async (req, res) => {
@@ -142,23 +143,24 @@ router.post('/logout', async (req, res) => {
       console.log("토큰 검증 오류", error)
     }
 
-    res.clearCookie(COOKIE_NAME, {
+    res.clearCookie("token", token, {
       httpOnly: true,
-      secure: SECURE,
-      sameSite: SAME_SITE,
-      path: COOKIE_PATH
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
     })
 
-    res.json({ message: '로그아웃 되었습니다.' })
+    res.json({message:'로그아웃 되었습니다.'})
 
 
 
   } catch (error) {
 
-    console.log("로그아웃중 서버오류", error)
-    res.status(500).json({ message: "서버 오류가 발생" })
+    console.log("로그아웃중 서버오류",error)
+    res.status(500).json({message:"서버 오류가 발생"})
   }
 })
+
+
 
 //유저 추가
 router.get('/users', async (req, res) => {
