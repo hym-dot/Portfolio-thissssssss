@@ -1,8 +1,17 @@
 import React from 'react'
-
+import Nav from "./Nav"
 const Header = () => {
   return (
-    <div>Header</div>
+    <header>
+      <div className="inner">
+        <h4>LOGO</h4>
+        <div className="right-wrap">
+
+          <Nav />
+          <button>DARK</button>
+        </div>
+      </div>
+    </header>
   )
 }
 

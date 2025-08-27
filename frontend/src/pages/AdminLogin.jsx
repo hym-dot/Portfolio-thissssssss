@@ -5,24 +5,22 @@ import "./styles/AdminLogin.scss"
 
 const AdminLogin = () => {
 
-    const nav = useNavigate()
-    const [formData, setFormData] = useState({
-        username: "",
-        password: ""
-    })
-    const [checking, setChecking] = useState(true)
+  const nav = useNavigate()
+  const [formData, setFormData] = useState({
+    username: "",
+    password: ""
+  })
+  const [checking, setChecking] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
 
-    const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
 
-    const [error, setError] = useState(null)
-
-      const handleChange = (e) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
   }
-
 
   const handleSubmit=async(e)=>{
     e.preventDefault()
@@ -46,15 +44,13 @@ const AdminLogin = () => {
 
   }
 
-
-
-return (
-    <div>
-        <div className='login-header'>
-            <h3>관리자 로그인</h3>
-            <p>관리자 전용 페이지 입니다.</p>
-        </div>
-          <form className='login-form' onSubmit={handleSubmit}>
+  return (
+    <div className='login-container'>
+      <div className='login-header'>
+        <h3>관리자 로그인</h3>
+        <p>관리자 전용 페이지 입니다.</p>
+      </div>
+      <form className='login-form' onSubmit={handleSubmit}>
         <div className="form-field">
 
           <label htmlFor="username">관리자 아이디 :</label>
@@ -81,7 +77,7 @@ return (
         <button type='submit'>로그인</button>
       </form>
     </div>
-)
+  )
 }
 
 export default AdminLogin

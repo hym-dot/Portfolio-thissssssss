@@ -1,12 +1,11 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express")
+const router = express.Router()
 
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const axios = require("axios");
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
-
-const User = require("../models/User");
+const User = require("../models/User")
+const { default: axios } = require("axios")
 
 const COOKIE_NAME = 'token'
 const isProd = process.env.NODE_ENV === 'production'
@@ -14,38 +13,34 @@ const isProd = process.env.NODE_ENV === 'production'
 const SAME_SITE = isProd ? 'none' : 'lax'
 const SECURE = isProd ? true : false
 const COOKIE_PATH = '/'
-
-
-//회원가입
 router.post('/signup', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    
-    const existingUser = await User.findOne({ username });
+    const { username, password } = req.body
+
+    const existingUser = await User.findOne({ username })
     if (existingUser) {
       return res.status(400).json({
         message: "이미 존재하는 사용자입니다."
-      });
+      })
     }
 
-
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     const user = new User({
       username,
       password: hashedPassword
-    });
+    })
 
-    await user.save();
+    await user.save()
 
-    res.status(201).json({ message: "회원가입이 완료 되었습니다." });
+    res.status(201).json({ message: "회원가입이 완료 되었습니다." })
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "서버 오류 발생" });
-  }
-});
 
-// 로그인
+    res.status(500).json({ message: "서버 오류 발생" })
+    console.log(error)
+  }
+})
+
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body
@@ -53,7 +48,7 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ username }).select("+password")
 
     if (!user) return res.status(401).json({ message: "사용자 없음" })
-    if (!user.isActive)return res.status(401).json({ message: "비활성계정" })//false일때 비활성
+    if (!user.isActive) return res.status(401).json({ message: "비활성계정" })//false일때 비활성
 
     const isMatch = await bcrypt.compare(password, user.password)
 
@@ -96,30 +91,29 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     )
-    res.cookie("token", token, {
+    res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000
+      secure: SECURE,
+      sameSite: SAME_SITE,
+      maxAge: 24 * 60 * 60 * 1000,
+      path: COOKIE_PATH
     })
 
-    const userWithoutPassword=user.toObject()
+    const userWithoutPassword = user.toObject()
     delete userWithoutPassword.password
 
     return res.status(200).json({
-      message:"로그인 성공",token,
-      user:userWithoutPassword
+      message: "로그인 성공", token,
+      user: userWithoutPassword
     })
 
 
   } catch (error) {
     console.error(error)
-    return res.status(500).json({message:"서버오류"})
+    return res.status(500).json({ message: "서버오류" })
   }
 })
 
-
-//로그아웃
 router.post('/logout', async (req, res) => {
   try {
     const token = req.cookies.token
@@ -143,26 +137,24 @@ router.post('/logout', async (req, res) => {
       console.log("토큰 검증 오류", error)
     }
 
-    res.clearCookie("token", token, {
+    res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict'
+      secure: SECURE,
+      sameSite: SAME_SITE,
+      path: COOKIE_PATH
     })
 
-    res.json({message:'로그아웃 되었습니다.'})
+    res.json({ message: '로그아웃 되었습니다.' })
 
 
 
   } catch (error) {
 
-    console.log("로그아웃중 서버오류",error)
-    res.status(500).json({message:"서버 오류가 발생"})
+    console.log("로그아웃중 서버오류", error)
+    res.status(500).json({ message: "서버 오류가 발생" })
   }
 })
 
-
-
-//유저 추가
 router.get('/users', async (req, res) => {
   try {
 
@@ -175,8 +167,6 @@ router.get('/users', async (req, res) => {
     return res.status(500).json({ message: "서버오류" })
   }
 })
-
-//삭제
 router.delete('/delete/:userId', async (req, res) => {
   try {
 
@@ -200,19 +190,18 @@ router.post('/verify-token', (req, res) => {
 
   if (!token) {
     return res.status(400).json({
-      isvaiid: false,
-      message: "토큰이 없습니다"
+      isValid: false,
+      message: "토큰이 없습니다."
     })
   }
   try {
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
     return res.status(200).json({
       isValid: true,
       user: decoded
     })
-
-
 
   } catch (error) {
     return res.status(401).json({
@@ -222,7 +211,4 @@ router.post('/verify-token', (req, res) => {
   }
 })
 
-
-
-
-module.exports = router;
+module.exports = router

@@ -1,39 +1,63 @@
-.login-form {
-  max-width: 40rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  border-radius: .8rem;
-  .form-field {
-    margin-bottom: 1.5rem;
+.login-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    // gap: 5rem;
 
-    lable {
-      font-size: 1.2rem;
-      color: aquamarine;
-    }input {
-      padding: 0.8rem 1rem;
-      border: 1px solid palevioletred;
-      border-radius: .4rem;
-      font-size: 1.4rem;
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
 
-      &:focus {
-        outline: none;
-        border-color: navy;
-      }
+        h3 {
+            font-size: 2rem;
+            margin-bottom: .5rem;
+            color: #333;
+        }
 
-    }
-  }
-  button {
-    width: 100%;
-    background-color: paleturquoise;
-    color: navy;
-    padding: 1rem;
-    border-radius: 2rem;
-    transition: background .2s;
-    &:hover {
-      background-color: rgb(142, 211, 211)
+        p {
+            font-size: 1.4rem;
+            color: #666;
+        }
     }
 
-  }
+    .login-form {
+        max-width: 40rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        padding: 2rem;
+        border-radius: .8rem;
+        .form-field{
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            
+            lable {
+                font-size: 1.2rem;
+                color:#444
+            }
+            input {
+                padding:0.8rem 1rem;
+                border: 1px solid plum;
+                border-radius: .4rem;
+                font-size: 1.4rem;
+
+                &:focus {
+                    outline: none;
+                    border-color: rgb(250, 42, 191);
+                }
+            }
+        }
+        button {
+            width: 100%;
+            background-color: rgba(255, 158, 174, 0.863);
+            padding: 1rem;
+            border-radius: .4rem;
+            color: #fff;
+            transition: background .2s;
+            &:hover{
+                background-color: palevioletred;
+            }
+        }
+    }
 }
