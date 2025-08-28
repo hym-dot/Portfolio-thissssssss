@@ -3,16 +3,33 @@ header {
     z-index: 5;
     width: 100%;
     padding: 2rem;
+
     .inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .right-wrap {
             display: flex;
             gap: 3rem;
+
             nav ul {
                 display: flex;
                 gap: 2rem;
+
+                li a {
+                    color: var(--text);
+                    text-decoration: none;
+                    transition: color 0.3s ease, border-bottom 0.3s ease;
+
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        background-color: palegreen;
+                        color: var(--primary);
+                        border-bottom: 2px solid var(--primary);
+                    }
+                }
             }
         }
     }

@@ -1,5 +1,8 @@
 import React from 'react'
 import Nav from "./Nav"
+import "./styles/Header.scss"
+import { useTheme } from '../../context/ThemeContext'
+
 const Header = () => {
   return (
     <header>
@@ -8,7 +11,7 @@ const Header = () => {
         <div className="right-wrap">
 
           <Nav />
-          <button>DARK</button>
+          <button onClick={toggleTheme}>{theme}</button>
         </div>
       </div>
     </header>
