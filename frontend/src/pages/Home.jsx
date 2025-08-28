@@ -5,14 +5,12 @@ import Header from '../components/home/Header'
 import Work from '../components/home/Work'
 import Contact from '../components/home/Contact'
 import Footer from '../components/home/Footer'
-
-
 const Home = () => {
-  const {theme, toggleTheme} = useTheme()
+  
+
   return (
     <div>
-      현재의 테마:{theme}
-      <button onClick={toggleTheme}></button>
+    
       <Header />
       <main>
         <section id='Hero'>

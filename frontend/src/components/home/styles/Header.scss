@@ -2,32 +2,49 @@ header {
     position: fixed;
     z-index: 5;
     width: 100%;
-    padding: 2rem;
+    transition: all .3s;
+    border-bottom: 1px solid var(--underline);
+
+    &.scroll {
+        background-color: var(--bg);
+
+        .inner {
+            border-bottom-color: var(--underline);
+        }
+    }
 
     .inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 1rem 0;
+
+        h4 {
+            font-size: clamp(1.8rem, 2.2vw, 2.4rem);
+        }
 
         .right-wrap {
             display: flex;
+            align-items: center;
             gap: 3rem;
 
             nav ul {
                 display: flex;
                 gap: 2rem;
+                font-size: 1.4rem;
 
-                li a {
-                    color: var(--text);
-                    text-decoration: none;
-                    transition: color 0.3s ease, border-bottom 0.3s ease;
+                li {
+                    a {
+                        padding: 0.5rem 1rem;
+                        border-radius: 0.3rem;
+                        color: var(--text);
+                        transition: background-color 0.3s ease, color 0.3s ease;
+                        text-decoration: none;
 
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        background-color: palegreen;
-                        color: var(--primary);
-                        border-bottom: 2px solid var(--primary);
+                        &:hover {
+                            background-color: peachpuff;
+                            color: gray;
+                        }
                     }
                 }
             }

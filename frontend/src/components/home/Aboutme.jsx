@@ -2,7 +2,9 @@ import React from 'react'
 
 const Aboutme = () => {
   return (
-    <div>Aboutme</div>
+    <div className='inner aboutme-inner'>
+      
+    </div>
   )
 }
 
