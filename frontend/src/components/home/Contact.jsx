@@ -5,8 +5,10 @@ const Contact = () => {
   return (
     <div className='inner contact-inner'>
       <h1 className="tit">
-        <span className="star-spin"><i className="star">✱</i></span>
         aboutMe
+        <span className="star-spin">
+          <i className="star">✱</i>
+        </span>
       </h1>
       <div className="contact-wrapper">
         <form className='contact-form'>
@@ -14,19 +16,19 @@ const Contact = () => {
             <li>
               <label htmlFor="name" className='label'>이름</label>
               <div className="field">
-                <input type="text" placeholder='홍길동'/>
+                <input type="text" placeholder='홍길동' />
               </div>
             </li>
             <li>
               <label htmlFor="email" className='label'>이메일</label>
               <div className="field">
-                <input type="email" placeholder='example@naver.com'/>
+                <input type="email" placeholder='example@naver.com' />
               </div>
             </li>
             <li>
               <label htmlFor="phone" className='label'>연락처</label>
               <div className="field">
-                <input type="tel" placeholder='010-1234-5678'/>
+                <input type="tel" placeholder='010-1234-5678' />
               </div>
             </li>
             <li>
@@ -44,18 +46,25 @@ const Contact = () => {
 
         </form>
         <ul className="contact-lst">
-          {/* {} */}
-          <li>
-            <strong className="label"></strong>
-            <div className="content">
-              <a href="">전화번호...</a>
-              <div className="hint"></div>
-            </div>
-          </li>
+          {contact.basics.map((item) => (
+            <li key={item.label}>
+              <strong className="label">{item.label}</strong>
+              <div className="content">
+                <a href={item.href}>{item.value}</a>
+                <div className="hint">{item.hint}</div>
+              </div>
+            </li>
+
+          ))}
           <li>
             <strong className="label">채널</strong>
             <div className="contact-chips">
-              
+              {contact.channels.map((item) => (
+
+                <a href={item.href} key={item.channels}>
+                  {item.label}
+                </a>
+              ))}
             </div>
           </li>
         </ul>
