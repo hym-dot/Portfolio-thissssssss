@@ -1,7 +1,6 @@
-import React from 'react';
-import "./styles/Contact.scss";
-import contact from '../../utils/contact';
-
+import React from 'react'
+import "./styles/Contact.scss"
+import contact from '../../utils/contact'
 const Contact = () => {
   return (
     <div className='inner contact-inner'>
@@ -9,26 +8,25 @@ const Contact = () => {
         <span className="star-spin"><i className="star">✱</i></span>
         aboutMe
       </h1>
-
       <div className="contact-wrapper">
         <form className='contact-form'>
           <ul>
             <li>
               <label htmlFor="name" className='label'>이름</label>
               <div className="field">
-                <input type="text" id="name" placeholder='홍길동'/>
+                <input type="text" placeholder='홍길동'/>
               </div>
             </li>
             <li>
               <label htmlFor="email" className='label'>이메일</label>
               <div className="field">
-                <input type="email" id="email" placeholder='example@naver.com'/>
+                <input type="email" placeholder='example@naver.com'/>
               </div>
             </li>
             <li>
               <label htmlFor="phone" className='label'>연락처</label>
               <div className="field">
-                <input type="tel" id="phone" placeholder='010-1234-5678'/>
+                <input type="tel" placeholder='010-1234-5678'/>
               </div>
             </li>
             <li>
@@ -43,9 +41,10 @@ const Contact = () => {
               </div>
             </li>
           </ul>
-        </form>
 
+        </form>
         <ul className="contact-lst">
+          {/* {} */}
           <li>
             <strong className="label"></strong>
             <div className="content">
@@ -56,13 +55,13 @@ const Contact = () => {
           <li>
             <strong className="label">채널</strong>
             <div className="contact-chips">
-              {/* 채널 정보 추가 가능 */}
+              
             </div>
           </li>
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
-export default Contact;
+export default Contact
