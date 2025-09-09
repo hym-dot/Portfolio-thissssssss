@@ -9,6 +9,13 @@
         transform: translateX(11vw);
         position: relative;
 
+        @media screen and (max-width:
+        1599px) {
+            transform: translateX(0);
+            align-self: flex-start;
+
+        }
+
         .star-spin {
             position: absolute;
             left: -10rem;
@@ -21,6 +28,11 @@
         gap: 2rem;
         width: 100%;
         margin-top: 5.3rem;
+
+        @media screen and (max-width: 1440px){
+            min-width: 30rem;
+            
+        }
 
         .in-wrap {
             // width: 25%;

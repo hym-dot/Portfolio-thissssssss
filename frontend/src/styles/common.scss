@@ -3,10 +3,15 @@ section {
     z-index: 0;
     min-height: 100vh;
     background-color: var(--bg);
+    overflow: hidden;
 
     // overflow: hidden;
     &#Work {
         height: auto;
+    }
+
+    &#Contact {
+        height: 100vh;
     }
 
 }
@@ -27,7 +32,7 @@ section {
 
         .btn {
             background-color: var(--primary);
-            color: var(--bg);
+            color: var(--neutral-900);
             border: 0;
             padding: .6rem 1rem;
             cursor: pointer;
@@ -118,7 +123,8 @@ span.star-spin {
     height: 1em;
     transform-origin: 50% 50%;
     animation: rotate 3s infinite alternate;
-    position: relative;
+    position: absolute;
+    // left: 50%;
 
     i.star {
         position: absolute;

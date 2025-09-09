@@ -5,7 +5,7 @@ const Contact = () => {
   return (
     <div className='inner contact-inner'>
       <h1 className="tit">
-        aboutMe
+        contact
         <span className="star-spin">
           <i className="star">✱</i>
         </span>
@@ -39,7 +39,7 @@ const Contact = () => {
             </li>
             <li>
               <div className="field">
-                <button type='submit'>contact me</button>
+                <button type='submit' className='Button'>contact me</button>
               </div>
             </li>
           </ul>
@@ -61,7 +61,7 @@ const Contact = () => {
             <div className="contact-chips">
               {contact.channels.map((item) => (
 
-                <a href={item.href} key={item.channels}>
+                <a href={item.href} key={item.label}>
                   {item.label}
                 </a>
               ))}
