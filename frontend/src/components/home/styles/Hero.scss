@@ -11,11 +11,11 @@
 
         @media screen and (max-width:599px) {
             font-size: 1.6rem;
+            // width:50%;
         }
-
-        @media screen and (max-width:399px) {
-            display: none;
-        }
+                @media screen and (max-width:399px) {
+                    display: none;
+                }
     }
 
     .arrow {
