@@ -1,0 +1,44 @@
+.inner.admin-contact {
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .contact-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+
+        >li {
+            flex: 1;
+            width: clamp(250px, 30%, 400px);
+            background-color: #fff;
+            padding: 1.5rem;
+            box-shadow: 0 2px 6px #000000a6;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            line-height: 2;
+
+            &:hover {
+                box-shadow: 0 2px 12px #000000e1;
+                transform: translateY(-2px);
+            }
+
+            .key {
+                display: inline-block;
+                color: #333;
+                font-weight: 600;
+                padding-right: 5px;
+            }
+
+            span {
+                display: inline-block;
+                color: #333;
+                font-weight: 600;
+                padding-right: 1rem;
+            }
+        }
+    }
+}
