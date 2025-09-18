@@ -1,7 +1,24 @@
 import React from 'react'
 import "./styles/Contact.scss"
 import contact from '../../utils/contact'
+import {api} from '../../lib/api'
+
+
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name:"",
+    email:"",
+    phone:"",
+    message:"",
+    status:"in progress"
+  })
+
+  const handleChange = (e) =>{
+    setFormData({
+      ...formData
+    })
+  }
+
   return (
     <div className='inner contact-inner'>
       <h1 className="tit">
@@ -22,7 +39,7 @@ const Contact = () => {
             <li>
               <label htmlFor="email" className='label'>이메일</label>
               <div className="field">
-                <input type="email" placeholder='example@naver.com' />
+                <input id='email' type="email" placeholder='example@naver.com' />
               </div>
             </li>
             <li>
